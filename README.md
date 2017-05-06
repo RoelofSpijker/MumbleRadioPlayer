@@ -1,5 +1,5 @@
 # MumbleRadioPlayer
-A Mumble bot that plays radio stream by URL
+A fork of [MumbleRadioPlayer](https://github.com/azlux/MumbleRadioPlayer) by azlux. This fork focuses on YouTube playback. It use the excellent [pafy](https://github.com/mps-youtube/pafy) library to accomplish this.
 
 ======
 
@@ -25,7 +25,7 @@ Optional parameters :
 -password <password>
 `
 
-It's in Python 3 (The python2 version is into another branch. depreciated version !)
+It's in Python 3.
 
 #### Commands
 You can change commands into the configuration file, The default is :
@@ -40,11 +40,24 @@ You can change commands into the configuration file, The default is :
 - !oust (stop + go into the default channel)
 - !v <number> (change volume with a percentage )
 - !np (get the current music title - now playing feature)
+##### Added commands
+The following additional commands are available: 
+`<x>` denotes a required parameter, `[x=1]` denotes an optional parameter with default value.
+- !ytplay `<yt_id>` (`yt_id` is the last bit of a YT URL, will download the audio and play it)
+- !ytpl `<yt_pl_id>` `[shuffle=1]` (`yt_pl_id` is the last bit of a YT playlist URL, will retrieve the list and then iterate over them, downloading and playing one at a time. Will shuffle by default, optional second parameter `shuffle` can be set to 0 to disable)
+- !next (play the next song in the YT playlist)
+- !upnext `[num=3]` (displays the next `num` songs that will be played (if in playlist))
+- !addpl `<yt_pl_id>` `<name>` (adds YT playlist to DB as name for easier playback later on)
+- !delpl `<idx>` (removes playlist number `idx` from the DB)
+- !listpls (lists the playlists in the DB)
+- !playlist `<num>` (starts playing playlist number `num` from the list)
+- !skip `[num=1]` (skips the next `num` songs in the playlist)
+- !q `<yt_id>` (prepends YT video with `yt_id` as id to the queue)
 
 #### Installation
 1. You need python 3 with opuslib and protobuf (look at the requirement of pymumble)
-you will need pip3 (apt-get install python3-pip)
-2. The Bot use ffmpeg, so you know what you have to do if ffmpeg aren't in your package manager. I personally use [this repository](http://repozytorium.mati75.eu/) on my raspberry.
+you will need pip3 (apt-get install python3-pip). Additionally the bot uses `requests`, `pafy`, `beautifulsoup4`, and `sqlite3`.
+2. The Bot use ffmpeg, so you know what you have to do if ffmpeg aren't in your package manager.
 
 commands (don't forget the sudo mode):
 ```
@@ -54,9 +67,6 @@ cd ./MumbleRadioPlayer
 pip3 install -r requirement.txt
 chmod +x ./mumbleRadioPlayer.py
 ```
-
-
-If you really want to install pymumble independently, there are a install.sh. But think about upgrade. The Bot will work that way too.
 
 #### Important
 What the bot cannot do:
@@ -69,7 +79,6 @@ Because, Yes, You can help.
 - If you find bugs, problems, errors, mistakes, you can create an issue on github.
 - If you have a suggestion or want a new feature, you can create an issue.
 - If you want to make change by your own, fork and pull. We will discuss about your code.
-
 
 #### Additionnal informations
 If a command doesn't work, try to find the error, or send me the command and I will try to reproduce it.
